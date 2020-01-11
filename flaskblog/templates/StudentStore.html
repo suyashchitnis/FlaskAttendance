@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="" enctype = "multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+                
+                <div class="form-group">
+                    {{ form.Id.label(class="form-control-label") }}
+                    {{ form.Id(readonly=true,class="form-control form-control-lg") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.sname.label(class="form-control-label") }}
+                    {{ form.sname(class="form-control form-control-lg") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.sdob.label(class="form-control-label") }}
+                    {{ form.sdob(class="form-control form-control-lg") }}
+                </div>
+                <div class="form-group">
+                    {{ form.saddress.label(class="form-control-label") }}
+                    {{ form.saddress(class="form-control form-control-lg") }}
+                </div>
+                <div class="form-group">
+                    {{ form.slandmark.label(class="form-control-label") }}
+                    {{ form.slandmark(class="form-control form-control-lg") }}
+                </div>
+                <div class="form-group">
+                    {{ form.saddmission.label(class="form-control-label") }}
+                    {{ form.saddmission(class="form-control form-control-lg") }}
+                </div>
+                <div class="form-group">
+                    {{ form.file.label(class="form-control-label") }}
+                    {{ form.file(class="form-control form-control-lg") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+<!-- "%Y-%m-%d"
+"%d-%m-%Y" -->

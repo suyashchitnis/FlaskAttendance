@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    {% if title %}
+        <title>Adarsh- {{ title }}</title>
+    {% else %}
+        <title>Adarsh</title>
+    {% endif %}
+</head>
+<body>
+    <body>
+        <header class="site-header">
+          <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+              <a class="navbar-brand mr-4" href="/">Adarsh Comp.</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                  {% if current_user.is_authenticated==False and current_user.is_active==False %}
+                  <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+                  <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+                  {% endif %}
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                      {% if current_user.is_authenticated and current_user.is_active %}
+                        
+                        <li class="dropdown">                    
+                            <a class="nav-item nav-link" href="#">
+                                <span></span>Students
+                                <!-- {{ current_user.email }} -->
+                                </a>
+                                <ul class="dropdown-content" Value="Student">
+                                  <li><a href="{{ url_for('Student') }}">ADD</a></li>
+                                  <li><a href="{{ url_for('Remove') }}">REMOVE</a></li>
+                                  <li><a href="#">UPDATE</a></li>
+                                </ul>        
+                        </li>   
+                        
+    
+                        <li class="dropdown">                    
+                          <a class="nav-item nav-link" href="#">
+                              <span></span>
+                              <div class="avatar-circle">
+                                {% set username = current_user.username %}
+                                {% set testing = username.split(" ") %}
+                                <span class="initials">{{testing[0][0]+testing[1][0]}}</span>
+                              </div>
+                              {{ current_user.username }}
+                              </a>
+                              <ul class="dropdown-content" Value="Student">
+                                <li><a href="{{ url_for('account') }}">Account</a></li>
+                                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                              </ul>        
+                      </li>   
+                      
+                        
+                        
+                        
+                      {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                        <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                      {% endif %}
+                </div>
+              </div>
+            </div>
+          </nav>
+        </header>    
+        <main role="main" class="container">
+          <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+          </div>
+            <div style="overflow-x:auto;">
+              {% if table|length > 0 %}
+              <table style="border: black;">
+                  <tr>
+
+                        {% for i in table[0].keys() %}
+                          {% if i=='ID' or i=='student_name' or i=='student_date_of_addmission' or i=='file' %}  
+                          <th>
+                            {{ i }}
+                          </th>
+                          {% endif %}
+                        {% endfor %}
+                        <th>
+                            Delete
+                        </th>
+                    </tr>
+                    {% for i in table %}
+            
+                    <tr>
+            
+                        {% for key, value in i.items() %}
+                          {% if key=='ID' or key=='student_name' or key=='student_date_of_addmission' or key=='file' %}  
+                            <td>
+                              {% if key == 'file' %}
+                                <img src="flaskblog/images/{{[i['student_name'],'.png']|join('')}}" alt="{{[i['student_name'],'.png']|join('')}}">
+                              {% else %}
+                                {{ value }}
+                              {% endif %}
+                            </td>
+                          {% endif %}
+                        {% endfor %}
+                        <td><a href="{{ url_for('doRemove',data=i['ID']) }}">delete....!!!</a></td>
+                    </tr>
+                    {% endfor %}
+                    
+                </table>
+                {% else %}
+                    <h1>No Student</h1>
+
+                {% endif %}
+            </div>
+        </main>
+</body>
+</html>
