@@ -1,7 +1,7 @@
 # FlaskAttendance
 App to manage attandance system
 
-As the flask framework comes along from the python background , it support various short but sweet functionalities
+As the flask framework belongs to the python programming , it support various short but sweet functionalities to make your things represent and work beautiful.
 
 With the help of MVT i.e Model View Template formate this project is created
 
